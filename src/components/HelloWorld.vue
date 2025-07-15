@@ -2,11 +2,12 @@
 import { ref } from "vue";
 
 const name = ref("");
-const email = ref("");
+const password = ref("");
 const data = ref([]);
+const apiUrl = import.meta.env.VITE_API_LINK;
 
 const fetchData = async () => {
-  const res = await fetch("https://script.google.com/macros/s/AKfycbzME3JPLbkY_n2hcdYStjQphu430jKicI9qiAfY7dVWgYVESyO-m7LSVpxqZaOsNIC2Ww/exec");
+  const res = await fetch(apiUrl);
   data.value = await res.json();
 };
 
@@ -17,14 +18,13 @@ const hashText = async (text) => {
 };
 
 const handleSubmit = async () => {
-  const hashedName = await hashText(name.value);
-  const hashedEmail = await hashText(email.value);
+  const hashedPassword = await hashText(password.value);
 
   const formData = new FormData();
-  formData.append("name", hashedName);
-  formData.append("email", hashedEmail);
+  formData.append("Username", name.value);
+  formData.append("Password", hashedPassword);
 
-  await fetch("https://script.google.com/macros/s/AKfycbzME3JPLbkY_n2hcdYStjQphu430jKicI9qiAfY7dVWgYVESyO-m7LSVpxqZaOsNIC2Ww/exec", {
+  await fetch(apiUrl, {
     method: "POST",
     body: formData,
   });
@@ -37,7 +37,7 @@ const handleSubmit = async () => {
 <template>
   <div class="p-4">
     <input v-model="name" placeholder="Name" class="border px-2 py-1 mr-2" />
-    <input v-model="email" placeholder="Email" class="border px-2 py-1 mr-2" />
+    <input v-model="password" placeholder="password" class="border px-2 py-1 mr-2" />
     <button @click="handleSubmit" class="bg-blue-500 text-white px-4 py-1">Submit</button>
 
     <ul class="mt-4">
