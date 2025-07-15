@@ -11,13 +11,18 @@ const fetchData = async () => {
 };
 
 const handleSubmit = async () => {
-  await fetch("https://script.google.com/macros/s/YOUR_WEBAPP_ID/exec", {
+  const formData = new FormData();
+  formData.append("name", name.value);
+  formData.append("email", email.value);
+
+  await fetch("https://script.google.com/macros/s/AKfycbzME3JPLbkY_n2hcdYStjQphu430jKicI9qiAfY7dVWgYVESyO-m7LSVpxqZaOsNIC2Ww/exec", {
     method: "POST",
-    body: JSON.stringify({ name: name.value, email: email.value }),
-    headers: { "Content-Type": "application/json" },
+    body: formData,
   });
-  await fetchData(); // Refresh
+
+  await fetchData();
 };
+
 
 onMounted(fetchData);
 </script>
@@ -29,7 +34,7 @@ onMounted(fetchData);
     <button @click="handleSubmit" class="bg-blue-500 text-white px-4 py-1">Submit</button>
 
     <ul class="mt-4">
-      <li v-for="(item, i) in data" :key="i">{{ item.Name }} - {{ item.Email }}</li>
+      <li v-for="(item, i) in data" :key="i">{{ item.Username }} - {{ item.Password }}</li>
     </ul>
   </div>
 </template>
