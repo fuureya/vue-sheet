@@ -1,6 +1,6 @@
 import "./assets/main.css";
 import App from "./App.vue";
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter } from "vue-router";
 import { createApp } from "vue";
 
 import LoginPage from "./components/LoginPage.vue";
@@ -12,13 +12,13 @@ const routes = [
     component: HelloWorld,
   },
   {
-    path: "/anjay",
+    path: "/login",
     component: LoginPage,
   },
 ];
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes,
 });
 
